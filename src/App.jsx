@@ -20,26 +20,18 @@ import {
 } from 'lucide-react';
 
 // --- Global API Configuration ---
-const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
-const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || "gemini-2.5-flash-preview-09-2025";
-const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
+// --- Global API Configuration ---
 const MAX_RETRIES = 5;
+
 
 // --- API Utility Function ---
 const fetchGeminiResponse = async (userQuery, systemPrompt, useGrounding = false) => {
-    const payload = {
-        contents: [{ parts: [{ text: userQuery }] }],
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-    };
-
-    if (useGrounding) {
-        payload.tools = [{ "google_search": {} }];
-    }
+    const payload = { userQuery, systemPrompt, useGrounding };
 
     let lastError = null;
     for (let attempt = 0; attempt < MAX_RETRIES; attempt++) {
         try {
-            const response = await fetch(GEMINI_API_URL, {
+            const response = await fetch('/.netlify/functions/generate-content', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
