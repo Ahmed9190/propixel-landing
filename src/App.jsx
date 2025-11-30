@@ -92,7 +92,7 @@ const PORTFOLIO_ITEMS = [
     id: 1,
     title: "كمبوند سكاي لاين",
     category: "realestate",
-    image: "https://images.unsplash.com/photo-1600596542815-2a4d04774c13?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80",
+    image: "https://plus.unsplash.com/premium_photo-1671358689953-ee06a6671fce?q=80&w=1632&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
     description: "صفحة هبوط لمشروع عقاري فاخر تهدف لجمع بيانات العملاء المهتمين.",
     stats: { conversion: "8.5%", leads: "1,240", time: "0.8s" },
     challenge: "كان العميل يعاني من ارتفاع تكلفة النقرة وضعف جودة المسجلين.",
@@ -794,6 +794,16 @@ const ContactView = () => {
 
 // --- Main App Component ---
 
+// Scroll to top on route change
+const ScrollToTop = ({ setIsMenuOpen }) => {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+    if (setIsMenuOpen) setIsMenuOpen(false);
+  }, [pathname, setIsMenuOpen]);
+  return null;
+};
+
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
@@ -807,20 +817,12 @@ const App = () => {
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
-  // Scroll to top on route change
-  const ScrollToTop = () => {
-    const { pathname } = useLocation();
-    useEffect(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-      setIsMenuOpen(false);
-    }, [pathname]);
-    return null;
-  };
+
 
   return (
     <BrowserRouter>
       <div dir="rtl" className="font-sans text-slate-800 bg-white min-h-screen selection:bg-indigo-500 selection:text-white">
-        <ScrollToTop />
+        <ScrollToTop setIsMenuOpen={setIsMenuOpen} />
         <Navbar 
           isMenuOpen={isMenuOpen} 
           setIsMenuOpen={setIsMenuOpen} 
