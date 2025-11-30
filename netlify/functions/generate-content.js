@@ -7,7 +7,7 @@ exports.handler = async function (event, context) {
     const { userQuery, systemPrompt, useGrounding } = JSON.parse(event.body);
 
     const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
-    const GEMINI_MODEL = process.env.GEMINI_MODEL || "gemini-2.5-flash-preview-09-2025";
+    const GEMINI_MODEL = process.env.GEMINI_MODEL;
 
     if (!GEMINI_API_KEY) {
       console.error("Missing GEMINI_API_KEY environment variable");
