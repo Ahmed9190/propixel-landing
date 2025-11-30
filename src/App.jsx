@@ -20,8 +20,8 @@ import {
 } from 'lucide-react';
 
 // --- Global API Configuration ---
-const GEMINI_API_KEY = "";
-const GEMINI_MODEL = "gemini-2.5-flash-preview-09-2025";
+const GEMINI_API_KEY = import.meta.env.VITE_GEMINI_API_KEY || "";
+const GEMINI_MODEL = import.meta.env.VITE_GEMINI_MODEL || "gemini-2.5-flash-preview-09-2025";
 const GEMINI_API_URL = `https://generativelanguage.googleapis.com/v1beta/models/${GEMINI_MODEL}:generateContent?key=${GEMINI_API_KEY}`;
 const MAX_RETRIES = 5;
 
